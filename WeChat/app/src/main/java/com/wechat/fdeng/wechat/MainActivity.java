@@ -4,7 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
+import android.view.Window;
 import android.widget.TextView;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 
 public class MainActivity extends Activity {
@@ -13,7 +18,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setOverflowButtonAlways();
+        getActionBar().setDisplayShowHomeEnabled(false);
     }
 
 
@@ -32,10 +38,43 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+
+        if (featureId == Window.FEATURE_ACTION_BAR && menu != null)
+        {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder"))
+            {
+                try
+                {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }        return super.onMenuOpened(featureId, menu);
+    }
+
+    private void setOverflowButtonAlways() {
+        try {
+            ViewConfiguration config = ViewConfiguration.get(this);
+            Field menuKey = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            menuKey.setAccessible(true);
+            menuKey.setBoolean(config, false);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
