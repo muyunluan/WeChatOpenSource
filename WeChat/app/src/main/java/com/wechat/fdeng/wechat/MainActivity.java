@@ -1,7 +1,10 @@
 package com.wechat.fdeng.wechat;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
@@ -10,9 +13,16 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
+
+    private ViewPager mViewPager;
+    private List<Fragment> mTabs = new ArrayList<Fragment>();
+    private String[] mTitles = new String[]{"First Fragment","Second Fragment","Third Fragment","Fourth Fragment"};
+    private FragmentPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +30,38 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         setOverflowButtonAlways();
         getActionBar().setDisplayShowHomeEnabled(false);
+
+        initView();
+        initData();
+
+        mViewPager.setAdapter(mAdapter);
     }
 
+    private void initView() {
+        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+    }
+
+    private void initData() {
+        for(String title : mTitles) {
+            TabFragment tabFragment = new TabFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(TabFragment.TITLE,title);
+            tabFragment.setArguments(bundle);
+            mTabs.add(tabFragment);
+        }
+
+        mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int i) {
+                return mTabs.get(i);
+            }
+
+            @Override
+            public int getCount() {
+                return mTabs.size();
+            }
+        };
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
