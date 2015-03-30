@@ -5,13 +5,11 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
@@ -24,14 +22,6 @@ import android.view.View;
  * TODO: document your custom view class.
  */
 public class ChangeColorIconWithText extends View {
-    private String mExampleString; // TODO: use a default from R.string...
-    private int mExampleColor = Color.RED; // TODO: use a default from R.color...
-    private float mExampleDimension = 0; // TODO: use a default from R.dimen...
-    private Drawable mExampleDrawable;
-
-    //private TextPaint mTextPaint;
-    private float mTextWidth;
-    private float mTextHeight;
 
     private int mColor = 0XFF45C01A;
     private Bitmap mIconBitmap;
@@ -46,11 +36,11 @@ public class ChangeColorIconWithText extends View {
     private Paint mTextPaint;
 
     public ChangeColorIconWithText(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public ChangeColorIconWithText(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     /**
@@ -62,7 +52,6 @@ public class ChangeColorIconWithText extends View {
      */
     public ChangeColorIconWithText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        //init(attrs, defStyle);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ChangeColorIconWithText);
         int n = a.getIndexCount();
