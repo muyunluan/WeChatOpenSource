@@ -28,6 +28,7 @@ public class TabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        /* get transferred data from outside */
         if(getArguments() != null) {
             mTitle = getArguments().getString(TITLE);
         }

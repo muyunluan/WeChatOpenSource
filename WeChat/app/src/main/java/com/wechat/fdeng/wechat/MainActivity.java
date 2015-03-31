@@ -20,7 +20,9 @@ import java.util.List;
 public class MainActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private ViewPager mViewPager;
+    /* store all Fragment */
     private List<Fragment> mTabs = new ArrayList<Fragment>();
+    /* title for each Fragment */
     private String[] mTitles = new String[]{"First Fragment", "Second Fragment", "Third Fragment", "Fourth Fragment"};
     private FragmentPagerAdapter mAdapter;
 
@@ -30,7 +32,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setOverflowButtonAlways();
+        /* disable actionbar icon */
         getActionBar().setDisplayShowHomeEnabled(false);
 
         initView();
@@ -62,20 +66,23 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         three.setOnClickListener(this);
         four.setOnClickListener(this);
 
-        //start from Fragment one
+        /* start from Fragment one */
         one.setIconAlpha(1.0f);
 
     }
 
     private void initData() {
+        /* init title for each Fragment */
         for (String title : mTitles) {
             TabFragment tabFragment = new TabFragment();
+            /* use Bundle to transfer data to Fragment */
             Bundle bundle = new Bundle();
             bundle.putString(TabFragment.TITLE, title);
             tabFragment.setArguments(bundle);
             mTabs.add(tabFragment);
         }
 
+        /* init FragmentPagerAdapter */
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -114,6 +121,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
 
+        /* use reflection to display icon of menu item */
         if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {
             if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
                 try {
@@ -128,6 +136,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         return super.onMenuOpened(featureId, menu);
     }
 
+    /**
+     * always display overflow button
+     */
     private void setOverflowButtonAlways() {
         try {
             ViewConfiguration config = ViewConfiguration.get(this);

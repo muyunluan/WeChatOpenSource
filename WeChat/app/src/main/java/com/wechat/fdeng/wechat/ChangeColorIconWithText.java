@@ -19,7 +19,12 @@ import android.view.View;
 
 
 /**
- * TODO: document your custom view class.
+ * To do this custom view
+ * 1. generate attrs.xml
+ * 2. use it in layout file: use hyman
+ * 3. get custom attributes in constructor
+ * 4. onMeasure
+ * 5. onDraw
  */
 public class ChangeColorIconWithText extends View {
 
@@ -27,9 +32,12 @@ public class ChangeColorIconWithText extends View {
     private Bitmap mIconBitmap;
     private String mText = "WeChat";
     private int mTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
+
+
     private Canvas mCanvas;
     private Bitmap mBitmap;
     private Paint mPaint;
+
     private float mAlpha;
     private Rect mIconRect;
     private Rect mTextBound;
@@ -44,7 +52,7 @@ public class ChangeColorIconWithText extends View {
     }
 
     /**
-     * Get all attributes of self defined view
+     * Get all attributes of custom view
      *
      * @param context
      * @param attrs
@@ -53,6 +61,7 @@ public class ChangeColorIconWithText extends View {
     public ChangeColorIconWithText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
+        /* acquire custom attributes */
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ChangeColorIconWithText);
         int n = a.getIndexCount();
         for (int i = 0; i < n; i++) {

@@ -6,6 +6,7 @@
         <item name="android:actionOverflowButtonStyle">@style/weixinActionOverflowButtonStyle</item>
     </style>
 
+    <!-- Define your theme here. -->
     <style name="weixinActionOverflowButtonStyle">
         <item name="android:src">@drawable/actionbar_add_icon</item>
     </style>
